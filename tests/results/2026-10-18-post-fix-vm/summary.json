@@ -1,0 +1,39 @@
+{
+  "run_utc": "2026-10-18T22:14:57.566890+00:00",
+  "kernel": "6.8.0-106-generic",
+  "architecture": "aarch64",
+  "logical_cpus": 4,
+  "tcp": {
+    "port": 44955,
+    "connections": 53,
+    "matching_events": 106,
+    "client_pids": [
+      1783,
+      1784,
+      1785,
+      1786
+    ],
+    "server_pid": 1758,
+    "server_side_reported_pids": [
+      1758
+    ],
+    "sample": "1758    python3          127.0.0.1:44955          127.0.0.1:40206          0.27 ms"
+  },
+  "scheduler_baseline": {
+    "windows": 9,
+    "events": 879,
+    "events_in_1ms_or_higher_display_buckets": 3,
+    "highest_nonzero_display_bucket": "2 ms"
+  },
+  "contention_workload": {
+    "busy_yes_processes": 8,
+    "periodic_sleep_processes": 4,
+    "periodic_sleep_seconds": 0.01
+  },
+  "scheduler_contention": {
+    "windows": 9,
+    "events": 4692,
+    "events_in_1ms_or_higher_display_buckets": 85,
+    "highest_nonzero_display_bucket": "65 ms"
+  }
+}

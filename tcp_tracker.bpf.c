@@ -6,6 +6,7 @@
 #define TCP_ESTABLISHED 1
 #define TCP_CLOSE       7
 #define TASK_COMM_LEN   16
+#define IPV4_FAMILY     2
 
 struct conn_info {
     __u64 start_ns;
@@ -47,7 +48,7 @@ struct {
 SEC("tracepoint/sock/inet_sock_set_state")
 int handle_set_state(struct trace_event_raw_inet_sock_set_state *ctx)
 {
-    if (ctx->protocol != IPPROTO_TCP)
+    if (ctx->protocol != IPPROTO_TCP || ctx->family != IPV4_FAMILY)
         return 0;
 
     __u64 skaddr = (__u64)(unsigned long)ctx->skaddr;
@@ -75,11 +76,10 @@ int handle_set_state(struct trace_event_raw_inet_sock_set_state *ctx)
             info->start_ns = bpf_ktime_get_ns();
             info->sport    = ctx->sport;
         } else {
-            /* inbound (server-accepted): pid will be 0, track anyway */
+            /* The socket may become established in the client's context.
+             * Attribute it later, when the server accepts the socket. */
             struct conn_info new_info = {};
             new_info.start_ns = bpf_ktime_get_ns();
-            new_info.pid      = bpf_get_current_pid_tgid() >> 32;
-            bpf_get_current_comm(&new_info.comm, sizeof(new_info.comm));
             __builtin_memcpy(&new_info.saddr, ctx->saddr, 4);
             __builtin_memcpy(&new_info.daddr, ctx->daddr, 4);
             new_info.sport = ctx->sport;
@@ -112,6 +112,24 @@ int handle_set_state(struct trace_event_raw_inet_sock_set_state *ctx)
         bpf_map_delete_elem(&conns, &skaddr);
     }
 
+    return 0;
+}
+
+/* accept() runs in the server's process context and returns its child socket. */
+SEC("fexit/inet_csk_accept")
+int BPF_PROG(handle_accept, struct sock *listener, int flags, int *err,
+             bool kern, struct sock *accepted)
+{
+    if (!accepted)
+        return 0;
+
+    __u64 skaddr = (__u64)accepted;
+    struct conn_info *info = bpf_map_lookup_elem(&conns, &skaddr);
+    if (!info)
+        return 0;
+
+    info->pid = bpf_get_current_pid_tgid() >> 32;
+    bpf_get_current_comm(&info->comm, sizeof(info->comm));
     return 0;
 }
 

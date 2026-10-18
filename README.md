@@ -1,6 +1,6 @@
 # ebpf-linux-tools
 
-Two lightweight Linux observability tools written in C using libbpf + CO-RE. Both attach directly to kernel tracepoints via eBPF — no kernel modules, no reboot, no runtime compilation on the target machine.
+Two lightweight Linux observability tools written in C using libbpf + CO-RE. They attach to kernel tracepoints and a TCP accept return hook via eBPF, without kernel modules or a reboot.
 
 Built from scratch as a way to learn eBPF internals: the verifier, BPF maps, ring buffers, and the libbpf skeleton workflow.
 
@@ -10,7 +10,7 @@ Built from scratch as a way to learn eBPF internals: the verifier, BPF maps, rin
 
 ### `tcp_tracker` — Per-process TCP connection tracker
 
-Hooks the `inet_sock_set_state` kernel tracepoint to observe every TCP connection on the system. Captures the originating PID and process name at `SYN_SENT` (the only moment that runs in the calling process's context), records a start timestamp at `ESTABLISHED`, and emits a completed event at `TCP_CLOSE`.
+Hooks the `inet_sock_set_state` kernel tracepoint to observe completed IPv4 TCP connections. Captures the originating PID and process name for outbound connections at `SYN_SENT`, and captures the accepting server process through `fexit/inet_csk_accept` for inbound connections. It records a start timestamp at `ESTABLISHED` and emits an event at `TCP_CLOSE`. The displayed duration is from establishment to close.
 
 Results stream live to stdout via a ring buffer:
 
@@ -26,7 +26,7 @@ PID     COMM             SRC                      DST                      DURAT
 **Internals:**
 - Hash map keyed by socket pointer tracks per-connection state across multiple tracepoint firings
 - Ring buffer streams completed `(pid, comm, src, dst, duration_ns)` events to userspace
-- Handles both outbound (PID captured at `SYN_SENT`) and inbound (PID captured at `ESTABLISHED`) connections
+- Tracks outbound and inbound sockets and attributes them to the connecting or accepting process; a [53-connection loopback test](tests/results/2026-10-18-post-fix-vm/README.md) checked both paths
 
 ---
 
@@ -50,6 +50,10 @@ bucket       count   distribution
 
 Under load (e.g. `stress --cpu 4`) you can watch the distribution shift from sub-10µs out to 2–4ms, then snap back when the stress process is killed.
 
+This describes an earlier manual observation. The raw output from that run was
+not retained. A later, documented validation using a different workload is in
+[tests/results/2026-10-18-post-fix-vm](tests/results/2026-10-18-post-fix-vm/README.md).
+
 **Internals:**
 - Hash map keyed by PID stores wakeup timestamps from `sched_wakeup`
 - `sched_switch` computes delta for the incoming process and increments a shared array map histogram
@@ -59,7 +63,7 @@ Under load (e.g. `stress --cpu 4`) you can watch the distribution shift from sub
 
 ## Stack
 
-- **libbpf + CO-RE** — compiles once, runs on any kernel with BTF enabled (no LLVM on target, no kernel headers, no recompilation)
+- **libbpf + CO-RE** — uses kernel BTF for type relocation; the required tracepoints and `inet_csk_accept` return hook must also be available on the target kernel
 - **clang 18** — compiles `.bpf.c` to BPF bytecode
 - **bpftool** — generates type-safe skeleton headers from BPF objects
 - **vmlinux.h** — generated from the running kernel's BTF blob; not checked in
@@ -68,7 +72,7 @@ Under load (e.g. `stress --cpu 4`) you can watch the distribution shift from sub
 
 ## Requirements
 
-- Linux kernel **5.15+** with BTF enabled (`CONFIG_DEBUG_INFO_BTF=y`)
+- Linux kernel with BTF and support for the required tracepoints and `fexit/inet_csk_accept` (validated on kernel 6.8.0-106-generic)
   - Verify: `ls /sys/kernel/btf/vmlinux`
 - `clang` + `llvm`
 - `libbpf-dev`

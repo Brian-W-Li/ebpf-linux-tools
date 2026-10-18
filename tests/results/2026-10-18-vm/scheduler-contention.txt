@@ -1,0 +1,169 @@
+Attached. Collecting scheduler latency data...
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          0   |                                        |
+   2 us  :         15   |█                                       |
+   4 us  :        380   |████████████████████████████████████████|
+   8 us  :        138   |██████████████                          |
+  16 us  :        196   |████████████████████                    |
+  32 us  :        138   |██████████████                          |
+  64 us  :         24   |██                                      |
+ 128 us  :         10   |█                                       |
+ 256 us  :          5   |                                        |
+ 512 us  :          4   |                                        |
+   1 ms  :          6   |                                        |
+   2 ms  :         13   |█                                       |
+   4 ms  :          1   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          5   |                                        |
+   2 us  :         18   |██                                      |
+   4 us  :        285   |████████████████████████████████████████|
+   8 us  :         80   |███████████                             |
+  16 us  :         78   |██████████                              |
+  32 us  :         39   |█████                                   |
+  64 us  :         10   |█                                       |
+ 128 us  :          5   |                                        |
+ 256 us  :          3   |                                        |
+ 512 us  :          5   |                                        |
+   1 ms  :          4   |                                        |
+   2 ms  :          5   |                                        |
+   4 ms  :          0   |                                        |
+   8 ms  :          5   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          3   |                                        |
+   2 us  :         11   |██                                      |
+   4 us  :        212   |████████████████████████████████████████|
+   8 us  :         58   |██████████                              |
+  16 us  :        112   |█████████████████████                   |
+  32 us  :         59   |███████████                             |
+  64 us  :          5   |                                        |
+ 128 us  :          7   |█                                       |
+ 256 us  :          2   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          1   |                                        |
+   2 us  :          1   |                                        |
+   4 us  :         83   |████████████████████████████████████████|
+   8 us  :         67   |████████████████████████████████        |
+  16 us  :         24   |███████████                             |
+  32 us  :         21   |██████████                              |
+  64 us  :          6   |██                                      |
+ 128 us  :          5   |██                                      |
+ 256 us  :          4   |█                                       |
+ 512 us  :          6   |██                                      |
+   1 ms  :          2   |                                        |
+   2 ms  :          6   |██                                      |
+   4 ms  :          7   |███                                     |
+   8 ms  :         11   |█████                                   |
+  16 ms  :          9   |████                                    |
+  32 ms  :         10   |████                                    |
+  65 ms  :          1   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          5   |                                        |
+   2 us  :          7   |█                                       |
+   4 us  :        252   |████████████████████████████████████████|
+   8 us  :        102   |████████████████                        |
+  16 us  :         65   |██████████                              |
+  32 us  :         26   |████                                    |
+  64 us  :          9   |█                                       |
+ 128 us  :          6   |                                        |
+ 256 us  :          8   |█                                       |
+ 512 us  :          3   |                                        |
+   1 ms  :          7   |█                                       |
+   2 ms  :          9   |█                                       |
+   4 ms  :          4   |                                        |
+   8 ms  :          2   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          8   |█                                       |
+   2 us  :         31   |███                                     |
+   4 us  :        312   |████████████████████████████████████████|
+   8 us  :         88   |███████████                             |
+  16 us  :         42   |█████                                   |
+  32 us  :         24   |███                                     |
+  64 us  :          9   |█                                       |
+ 128 us  :          5   |                                        |
+ 256 us  :          2   |                                        |
+ 512 us  :          2   |                                        |
+   1 ms  :          5   |                                        |
+   2 ms  :         13   |█                                       |
+   4 ms  :          2   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          1   |                                        |
+   2 us  :         11   |█                                       |
+   4 us  :        225   |████████████████████████████████████████|
+   8 us  :         67   |███████████                             |
+  16 us  :         62   |███████████                             |
+  32 us  :         15   |██                                      |
+  64 us  :          5   |                                        |
+ 128 us  :          3   |                                        |
+ 256 us  :          3   |                                        |
+ 512 us  :          3   |                                        |
+   1 ms  :          0   |                                        |
+   2 ms  :          9   |█                                       |
+   4 ms  :          1   |                                        |
+   8 ms  :          4   |                                        |
+  16 ms  :          3   |                                        |
+  32 ms  :          1   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          4   |                                        |
+   2 us  :          5   |                                        |
+   4 us  :        290   |████████████████████████████████████████|
+   8 us  :         83   |███████████                             |
+  16 us  :         48   |██████                                  |
+  32 us  :         17   |██                                      |
+  64 us  :          7   |                                        |
+ 128 us  :          4   |                                        |
+ 256 us  :          3   |                                        |
+ 512 us  :          0   |                                        |
+   1 ms  :          2   |                                        |
+   2 ms  :          5   |                                        |
+   4 ms  :          2   |                                        |
+
+--- next one-second window ---
+Scheduler Run Queue Latency  (1s window, Ctrl-C to stop)
+==========================================================
+bucket          count   distribution                            
+  < 1 us :          2   |                                        |
+   2 us  :          6   |█                                       |
+   4 us  :        218   |████████████████████████████████████████|
+   8 us  :         54   |█████████                               |
+  16 us  :         45   |████████                                |
+  32 us  :          5   |                                        |
+  64 us  :          1   |                                        |
+ 128 us  :          3   |                                        |
+ 256 us  :          1   |                                        |
+ 512 us  :          1   |                                        |
+   1 ms  :          0   |                                        |
+   2 ms  :          3   |                                        |
+
+Done.
